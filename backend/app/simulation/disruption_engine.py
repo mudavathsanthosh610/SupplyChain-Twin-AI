@@ -142,12 +142,42 @@ def simulate(
 ) -> SimulationResult:
 
     # ---------------------------------------------
-    # 1. BASELINE NETWORK
+    # 1. BASELINE NETWORK VALIDATION & GRAPH
     # ---------------------------------------------
+
+    if not network.nodes:
+        raise ValueError(
+            "The selected company's network has no supply-chain nodes configured yet. "
+            "Add or import nodes before running this scenario."
+        )
+
+    if not network.routes:
+        raise ValueError(
+            "The selected company's network does not have any connected routes. "
+            "Add or connect routes before running this scenario."
+        )
 
     baseline_graph = build_graph(
         network
     )
+
+    if not baseline_graph.has_node(request.source):
+        raise ValueError(
+            f"The selected company's network does not contain source node '{request.source}'. "
+            "Please configure or connect the source node before running this scenario."
+        )
+
+    if not baseline_graph.has_node(request.destination):
+        raise ValueError(
+            f"The selected company's network does not contain destination node '{request.destination}'. "
+            "Please configure or connect the destination node before running this scenario."
+        )
+
+    if not nx.has_path(baseline_graph, request.source, request.destination):
+        raise ValueError(
+            "The selected company's network does not contain a valid connected source and destination. "
+            "Add or connect the required nodes before running this scenario."
+        )
 
     baseline = calculate_best_route(
         baseline_graph,

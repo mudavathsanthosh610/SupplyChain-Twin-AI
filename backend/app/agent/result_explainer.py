@@ -1,10 +1,9 @@
 import json
+import urllib.error
 import urllib.request
 from typing import Any
 
-
-OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
-MODEL_NAME = "qwen2.5:3b"
+from app.config import settings
 
 
 AI_EXPLANATION_SCHEMA = {
@@ -70,6 +69,61 @@ def _ensure_actions(value: Any) -> list[str]:
         _ensure_text(item)
         for item in value
     ]
+
+
+def _fallback_explanation(
+    simulation_data: dict,
+) -> dict:
+    risk_level = str(
+        simulation_data.get("risk_level", "unknown")
+    )
+    baseline = simulation_data.get("baseline") or {}
+    disrupted = simulation_data.get("disrupted")
+
+    baseline_route = " → ".join(
+        str(node_id)
+        for node_id in baseline.get("route", [])
+    )
+    if disrupted:
+        disrupted_route = " → ".join(
+            str(node_id)
+            for node_id in disrupted.get("route", [])
+        )
+        route_impact = (
+            f"Baseline route: {baseline_route or 'not available'}. "
+            f"Disrupted route: {disrupted_route or 'not available'}. "
+            f"Cost change: {simulation_data.get('cost_change_percent', 'not available')}%; "
+            f"lead-time change: {simulation_data.get('delay_change_days', 'not available')} days."
+        )
+    else:
+        route_impact = (
+            f"Baseline route: {baseline_route or 'not available'}. "
+            "No disrupted-route result was returned."
+        )
+
+    inventory_impacts = simulation_data.get("inventory_impact") or []
+    inventory_impact = (
+        f"The deterministic simulation returned inventory impact for "
+        f"{len(inventory_impacts)} location(s). Review the detailed inventory results "
+        "for coverage, replenishment, and shortage estimates."
+    )
+
+    return {
+        "executive_summary": (
+            "The deterministic simulation completed. The local AI explanation service "
+            f"is unavailable; the simulation classified risk as {risk_level}."
+        ),
+        "route_impact": route_impact,
+        "inventory_impact": inventory_impact,
+        "risk_explanation": (
+            f"The deterministic simulation engine assigned a {risk_level} risk level. "
+            "The local AI explanation service was unavailable."
+        ),
+        "recommended_actions": [
+            "Review the deterministic route and inventory results before acting.",
+            "Confirm estimated inputs with verified company operational data.",
+        ],
+    }
 
 
 def explain_simulation_result(
@@ -239,7 +293,7 @@ Return only the required JSON object.
 
     payload = json.dumps(
         {
-            "model": MODEL_NAME,
+            "model": settings.ollama_parser_model,
             "prompt": prompt,
             "stream": False,
             "format": AI_EXPLANATION_SCHEMA,
@@ -250,7 +304,7 @@ Return only the required JSON object.
     ).encode("utf-8")
 
     request = urllib.request.Request(
-        OLLAMA_URL,
+        settings.ollama_url,
         data=payload,
         headers={
             "Content-Type":
@@ -259,16 +313,18 @@ Return only the required JSON object.
         method="POST",
     )
 
-    with urllib.request.urlopen(
-        request,
-        timeout=300,
-    ) as response:
-
-        result = json.loads(
-            response
-            .read()
-            .decode("utf-8")
-        )
+    try:
+        with urllib.request.urlopen(
+            request,
+            timeout=15,
+        ) as response:
+            result = json.loads(
+                response
+                .read()
+                .decode("utf-8")
+            )
+    except (urllib.error.URLError, TimeoutError):
+        return _fallback_explanation(simulation_data)
 
     explanation = json.loads(
         result["response"]
