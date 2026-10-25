@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SupplyChain Twin AI | Project Overview</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    :root {
+      color-scheme: light;
+      --navy: #10243a;
+      --ink: #23364a;
+      --muted: #5c7084;
+      --teal: #087f8c;
+      --mint: #e5f5f1;
+      --line: #dce5ec;
+      --paper: #ffffff;
+      --pale: #f3f7fa;
+      --amber: #fff4dc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #e9eef3;
+      color: var(--ink);
+      font: 10pt/1.48 "Segoe UI", Arial, sans-serif;
+    }
+    .page {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      margin: 12px auto;
+      padding: 17mm 18mm 15mm;
+      overflow: hidden;
+      background: var(--paper);
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 8pt;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .brand { color: var(--teal); font-weight: 700; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 12px;
+      color: var(--navy);
+      font-size: 33pt;
+      line-height: 1.06;
+      letter-spacing: -.035em;
+    }
+    h2 {
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 21pt;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+    h3 {
+      margin-bottom: 5px;
+      color: var(--navy);
+      font-size: 11pt;
+      line-height: 1.25;
+    }
+    p { margin-bottom: 9px; }
+    .eyebrow {
+      margin: 23px 0 8px;
+      color: var(--teal);
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .lead {
+      max-width: 155mm;
+      color: var(--muted);
+      font-size: 13pt;
+      line-height: 1.5;
+    }
+    .hero {
+      margin: 16mm -18mm 11mm;
+      padding: 19mm 18mm 17mm;
+      background: linear-gradient(130deg, #10243a 0%, #174a5b 64%, #087f8c 100%);
+      color: white;
+    }
+    .hero .eyebrow { margin-top: 0; color: #9ee7d7; }
+    .hero h1 { max-width: 145mm; color: white; }
+    .hero .lead { max-width: 145mm; color: #e0edf2; }
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 19px;
+    }
+    .pill {
+      padding: 5px 9px;
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 99px;
+      color: #f5fbfc;
+      font-size: 8pt;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .card {
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: white;
+    }
+    .card.tinted { background: var(--pale); }
+    .card.green { border-color: #c5e9df; background: var(--mint); }
+    .card.amber { border-color: #f0d79c; background: var(--amber); }
+    .number {
+      display: inline-grid;
+      width: 23px;
+      height: 23px;
+      margin-bottom: 6px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      font-weight: 700;
+    }
+    .step {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+    }
+    .step .number { flex: 0 0 23px; }
+    ul {
+      margin: 6px 0 0;
+      padding-left: 17px;
+    }
+    li { margin: 0 0 4px; }
+    .small { color: var(--muted); font-size: 8.5pt; }
+    .section { margin-top: 14px; }
+    .section-intro { margin-bottom: 12px; color: var(--muted); }
+    .label {
+      margin-bottom: 3px;
+      color: var(--teal);
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .callout {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-left: 3px solid var(--teal);
+      background: var(--pale);
+    }
+    .tech {
+      display: grid;
+      grid-template-columns: 35mm 1fr;
+      gap: 6px 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .tech strong { color: var(--navy); }
+    .resume {
+      margin-top: 7px;
+      padding: 12px 14px;
+      border: 1px solid #c5e9df;
+      border-radius: 9px;
+      background: var(--mint);
+    }
+    .quote {
+      padding: 12px 14px;
+      border-left: 3px solid #e0a72e;
+      background: var(--amber);
+      color: #55451f;
+      font-size: 9.5pt;
+    }
+    .footer {
+      position: absolute;
+      right: 18mm;
+      bottom: 8mm;
+      left: 18mm;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 6px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 7.5pt;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    @media print {
+      body { background: white; }
+      .page { margin: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <div class="topline"><span class="brand">PROJECT PORTFOLIO</span><span>Product &amp; AI Agent Overview</span></div>
+    <div class="hero">
+      <div class="eyebrow">Supply-chain decision support</div>
+      <h1>SupplyChain<br>Twin AI</h1>
+      <p class="lead">A digital-twin-style workspace for mapping a supply network, exploring disruption scenarios, and understanding potential route, cost, delay, and inventory effects—with a local AI agent to help users work with the model.</p>
+      <div class="meta">
+        <span class="pill">Next.js + React</span>
+        <span class="pill">FastAPI + Python</span>
+        <span class="pill">Deterministic simulations</span>
+        <span class="pill">Local AI assistant</span>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="label">The problem</div>
+        <h3>Disruption decisions are difficult</h3>
+        <p class="small">A supplier, route, port, or fuel-cost change can affect downstream deliveries and inventory. Teams need a clearer way to explore scenarios and compare possible responses.</p>
+      </div>
+      <div class="card green">
+        <div class="label">The product</div>
+        <h3>Model the network before acting</h3>
+        <p class="small">Users represent facilities and transport links, run what-if scenarios, examine modeled effects, and organize follow-up mitigation actions in one workspace.</p>
+      </div>
+    </div>
+    <div class="section">
+      <h2>How to explain it in 3 steps</h2>
+      <div class="grid-3">
+        <div class="card tinted">
+          <div class="step"><span class="number">1</span><div><h3>Map</h3><p class="small">Set up suppliers, plants, ports, warehouses, customers, inventory, and routes.</p></div></div>
+        </div>
+        <div class="card tinted">
+          <div class="step"><span class="number">2</span><div><h3>Simulate</h3><p class="small">Describe a disruption—such as a facility closure or fuel shock—and compare modeled scenarios.</p></div></div>
+        </div>
+        <div class="card tinted">
+          <div class="step"><span class="number">3</span><div><h3>Respond</h3><p class="small">Review impacts, discuss options with the assistant, and track selected mitigation actions.</p></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="callout"><strong>Project stage:</strong> Local-first MVP with deployment configuration prepared. A public hosted application has not yet been deployed.</div>
+    <div class="footer"><span>SupplyChain Twin AI</span><span>Project overview • October 2026</span></div>
+  </section>
+
+  <section class="page">
+    <div class="topline"><span class="brand">01 / PRODUCT</span><span>Capabilities &amp; workflows</span></div>
+    <div class="eyebrow">A connected operational workflow</div>
+    <h2>From network data to an actionable review</h2>
+    <p class="section-intro">The product combines supply-network modeling, scenario analysis, supplier monitoring, and team follow-through. It is designed to make assumptions and missing data visible—not to silently fill gaps.</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="label">Digital-twin workspace</div>
+        <h3>Represent the supply network</h3>
+        <ul class="small">
+          <li>Create company workspaces and guide setup from supplier to customer.</li>
+          <li>Represent suppliers, plants, ports, warehouses, distribution centers, customers, and routes.</li>
+          <li>Review the network visually and inspect route and facility details.</li>
+          <li>Keep synthetic demo networks clearly distinguished from company data.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="label">What-if simulation</div>
+        <h3>Explore disruption scenarios</h3>
+        <ul class="small">
+          <li>Model facility or route closures and fuel-cost changes.</li>
+          <li>Recalculate a feasible lower-cost route when the network allows one.</li>
+          <li>Compare 2–4 scenarios and review modeled cost, delay, inventory, and stockout exposure.</li>
+          <li>Use risk labels as scenario indicators, not guarantees of real-world outcomes.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="label">Supplier operations</div>
+        <h3>Monitor reported performance</h3>
+        <ul class="small">
+          <li>Store dated scorecards for on-time delivery, lead time, defects, and capacity utilization.</li>
+          <li>Preview and validate CSV/Excel reports before importing valid rows.</li>
+          <li>Compare trends, flag configured threshold breaches, and export portfolio data.</li>
+          <li>Show missing or outdated reports explicitly; do not grade unreported suppliers.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="label">Control Tower &amp; collaboration</div>
+        <h3>Turn review into follow-through</h3>
+        <ul class="small">
+          <li>Track mitigation actions with owners, due dates, status, modeled impact, and actual outcome notes.</li>
+          <li>Share workspaces using role-based owner, editor, and viewer access.</li>
+          <li>Review workspace activity and account notifications.</li>
+          <li>Compare recorded outcomes with modeled estimates after actions are completed.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="section">
+      <h3>Data quality is part of the workflow</h3>
+      <div class="grid-3">
+        <div class="card green"><p class="small"><strong>Readiness checks</strong><br>Check connectivity, route endpoints, inventory/demand inputs, cost/capacity coverage, and source references.</p></div>
+        <div class="card green"><p class="small"><strong>Transparent provenance</strong><br>Mark examples as synthetic and user-submitted information as reported—not independently verified.</p></div>
+        <div class="card green"><p class="small"><strong>Review before use</strong><br>Use estimates to support investigation; confirm assumptions with verified operational data.</p></div>
+      </div>
+    </div>
+    <div class="footer"><span>SupplyChain Twin AI</span><span>Product capabilities</span></div>
+  </section>
+
+  <section class="page">
+    <div class="topline"><span class="brand">02 / AI AGENT</span><span>Role, workflow &amp; boundaries</span></div>
+    <div class="eyebrow">Local, contextual, advisory</div>
+    <h2>What the Supply Chain Agent does</h2>
+    <p class="section-intro">The agent is a conversational assistant embedded in the app. It helps people understand the product and their selected workspace, interpret modeled results, and prepare network changes for human review.</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="number">A</div>
+        <h3>Answer questions</h3>
+        <p class="small">Responds to questions about app workflows and supply-chain concepts. When relevant, it receives the selected company’s active network context.</p>
+      </div>
+      <div class="card">
+        <div class="number">B</div>
+        <h3>Help describe scenarios</h3>
+        <p class="small">A local model parses natural-language disruptions into structured scenario inputs. A deterministic fallback can extract supported details when the model is unavailable.</p>
+      </div>
+      <div class="card">
+        <div class="number">C</div>
+        <h3>Explain simulation output</h3>
+        <p class="small">Summarizes route and inventory impact and suggests mitigation ideas. The language model explains results; it is instructed not to recalculate or change simulation values.</p>
+      </div>
+      <div class="card">
+        <div class="number">D</div>
+        <h3>Draft network records</h3>
+        <p class="small">Can propose a supplier, facility, or route draft from a conversation. The user reviews the draft and explicitly saves it through the normal app flow.</p>
+      </div>
+    </div>
+    <div class="section">
+      <h3>Voice and privacy approach</h3>
+      <div class="card tinted">
+        <p class="small">Voice input is transcribed with a locally installed Whisper model on the backend. The recording is sent to the local backend for transcription; the design does not use browser speech recognition or send audio to a hosted transcription provider. Company reference documents are intended for local storage and are not parsed by or sent to an external service.</p>
+      </div>
+    </div>
+    <div class="section">
+      <h3>What the agent does not do</h3>
+      <ul class="small">
+        <li>It does not autonomously modify or save the company network, supplier scorecards, or mitigation actions.</li>
+        <li>It does not independently verify uploaded or user-entered operational facts.</li>
+        <li>It does not guarantee predictions. Scenario outputs are estimates based on the current network data and modeled assumptions.</li>
+        <li>It is not currently part of the prepared hosted pilot: the assistant expects a privately reachable Ollama service, while the local computer’s Ollama endpoint cannot be reached from Render.</li>
+      </ul>
+    </div>
+    <div class="callout"><strong>Plain-language positioning:</strong> AI helps users ask questions, structure scenarios, and understand results. The simulation engine calculates the modeled numbers; a person decides what to do.</div>
+    <div class="footer"><span>SupplyChain Twin AI</span><span>AI agent overview</span></div>
+  </section>
+
+  <section class="page">
+    <div class="topline"><span class="brand">03 / TECH &amp; PORTFOLIO</span><span>Architecture, resume &amp; pitch</span></div>
+    <div class="eyebrow">Implementation snapshot</div>
+    <h2>Technology and project story</h2>
+    <div class="tech"><strong>Frontend</strong><span>Next.js 16, React 19, TypeScript</span></div>
+    <div class="tech"><strong>Backend</strong><span>Python, FastAPI, SQLAlchemy; SQLite locally and PostgreSQL support prepared for hosting</span></div>
+    <div class="tech"><strong>Network &amp; simulation</strong><span>NetworkX directed graph; Python route, disruption, cost, delay, and inventory calculations</span></div>
+    <div class="tech"><strong>AI &amp; voice</strong><span>Local Ollama language models for guidance and scenario parsing; local Whisper transcription for voice</span></div>
+    <div class="tech"><strong>Deployment preparation</strong><span>Vercel frontend and Render API/database blueprint included; production services still need provisioning and configuration</span></div>
+    <div class="section">
+      <h3>Resume-ready project entry</h3>
+      <div class="resume">
+        <strong>SupplyChain Twin AI — Supply-Chain Decision-Support Platform</strong>
+        <p class="small"><em>Next.js, React, TypeScript, FastAPI, Python, SQLAlchemy, NetworkX, Ollama, Whisper</em></p>
+        <ul class="small">
+          <li>Built a full-stack supply-chain digital-twin application for mapping supplier-to-customer networks and exploring disruption scenarios.</li>
+          <li>Implemented route and inventory impact simulations, multi-scenario comparison, supplier scorecards, configurable risk alerts, and mitigation-action tracking.</li>
+          <li>Integrated a local AI agent for app and supply-chain Q&amp;A, scenario parsing, result explanations, reviewable network drafts, and offline voice transcription.</li>
+          <li>Added data-readiness checks and explicit synthetic/user-reported data labels to communicate assumptions and data limitations.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="section">
+      <h3>Short interview explanation</h3>
+      <div class="quote">“I built SupplyChain Twin AI, a decision-support application where a team maps its supply network, tests disruption scenarios, and reviews estimated route, delay, and inventory impacts. I added a local AI agent to help interpret scenarios and results, while keeping calculations in the simulation engine and requiring people to review any proposed changes. The current version is an MVP; reliable results depend on verified company data, and the public deployment is still pending.”</div>
+    </div>
+    <div class="section">
+      <h3>Project links &amp; honest status</h3>
+      <p class="small"><strong>Source code:</strong> <a href="https://github.com/mudavathsanthosh610/SupplyChain-Twin-AI">github.com/mudavathsanthosh610/SupplyChain-Twin-AI</a></p>
+      <p class="small"><strong>Status:</strong> The repository is public. The app is available locally for development/testing; no public production app URL has been created yet. The hosted AI assistant is excluded from the current deployment blueprint until a secure private model service is configured.</p>
+    </div>
+    <div class="card amber section">
+      <p class="small"><strong>Responsible-use note:</strong> Demonstration networks contain synthetic examples. User-provided supplier and company data is not independently verified. Treat simulation and AI outputs as decision support, validate assumptions, and make operational decisions with qualified human review.</p>
+    </div>
+    <div class="footer"><span>Source: project implementation and README</span><span>Prepared October 2026</span></div>
+  </section>
+</body>
+</html>
