@@ -354,3 +354,7 @@ This is deployment preparation for a pilot—not a claim that the application is
 
 - **Source repository:** [github.com/mudavathsanthosh610/SupplyChain-Twin-AI](https://github.com/mudavathsanthosh610/SupplyChain-Twin-AI)
 - **Project overview PDF:** [`SupplyChain_Twin_AI_Project_Overview.pdf`](./SupplyChain_Twin_AI_Project_Overview.pdf)
+
+## Author
+
+**Mudavath Santhosh** · [mudavathsanthosh001@gmail.com](mailto:mudavathsanthosh001@gmail.com)
